@@ -1,11 +1,11 @@
 {
-  "name": "relational-db-testing",
+  "name": "database-sql-framework",
   "version": "1.2.0",
   "description": "A comprehensive package for testing relational databases with both Node.js and Python implementations",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yashwant-das/relational-db-testing.git"
+    "url": "https://github.com/yashwant-das/database-sql-framework.git"
   },
   "scripts": {
     "test": "jest",

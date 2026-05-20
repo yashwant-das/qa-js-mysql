@@ -5,7 +5,7 @@ This document shows the current organized project structure following best pract
 ## File Structure
 
 ```
-relational-db-testing/
+database-sql-framework/
 ├── .github/
 │   └── workflows/
 │       └── test.yml        # GitHub Actions CI/CD workflow
@@ -79,8 +79,8 @@ npm run setup            # Install all dependencies
 
 ```bash
 # Clone and setup
-git clone https://github.com/yashwant-das/relational-db-testing.git
-cd relational-db-testing
+git clone https://github.com/yashwant-das/database-sql-framework.git
+cd database-sql-framework
 
 # One-command setup and test
 ./scripts/setup-and-test.sh

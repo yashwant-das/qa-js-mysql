@@ -1,6 +1,6 @@
-# Relational Database Testing
+# Database SQL Framework
 
-[![Tests](https://github.com/yashwant-das/relational-db-testing/actions/workflows/test.yml/badge.svg)](https://github.com/yashwant-das/relational-db-testing/actions/workflows/test.yml)
+[![Tests](https://github.com/yashwant-das/database-sql-framework/actions/workflows/test.yml/badge.svg)](https://github.com/yashwant-das/database-sql-framework/actions/workflows/test.yml)
 
 A comprehensive package for testing relational database operations using both **Node.js** and **Python**. This project demonstrates CRUD (Create, Read, Update, Delete) operations with MySQL databases using modern testing frameworks and **Docker** for consistent development environments.
 
@@ -29,8 +29,8 @@ A comprehensive package for testing relational database operations using both **
 
 ```bash
 # Clone the repository
-git clone https://github.com/yashwant-das/relational-db-testing.git
-cd relational-db-testing
+git clone https://github.com/yashwant-das/database-sql-framework.git
+cd database-sql-framework
 
 # Run the automated setup and test script
 ./scripts/setup-and-test.sh
@@ -90,7 +90,7 @@ npm run db:stop
 ## Project Structure
 
 ```text
-relational-db-testing/
+database-sql-framework/
 ├── .github/
 │   └── workflows/
 │       └── test.yml       # GitHub Actions CI/CD workflow
