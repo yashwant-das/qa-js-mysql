@@ -9,8 +9,8 @@ Tests MySQL queries with Jest against a database running in Docker: create, read
 ## Prerequisites
 
 - Docker
-- Node.js 18+
-- Python 3.9+ (only for `python/`)
+- Node.js 20.19+ (CI uses 22)
+- Python 3.10+ (only for `python/`)
 
 ## Run the Jest tests
 
@@ -158,8 +158,8 @@ npm run setup            # Install all dependencies
 
 ## System Requirements
 
-- Node.js (v14 or higher)
-- Python 3.7+
+- Node.js 20.19+ (CI uses 22)
+- Python 3.10+ (only for `python/`)
 - Docker (for MySQL database)
 
 ## Environment Variables Reference

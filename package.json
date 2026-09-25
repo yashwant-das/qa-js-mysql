@@ -16,19 +16,34 @@
     "db:stop": "docker-compose down",
     "db:logs": "docker-compose logs mysql"
   },
-  "keywords": ["mysql", "database", "testing", "jest", "nodejs", "python", "docker", "crud"],
+  "keywords": [
+    "mysql",
+    "database",
+    "testing",
+    "jest",
+    "nodejs",
+    "python",
+    "docker",
+    "crud"
+  ],
   "author": "Yashwant Das",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
     "jest": "^30.0.4"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.5.0",
+    "@faker-js/faker": "^10.6.0",
     "dotenv": "^17.2.0",
     "mysql2": "^3.14.2"
   },
   "jest": {
-    "testMatch": ["**/tests/**/*.test.js"],
-    "testEnvironment": "node"
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "testEnvironment": "node",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@faker-js/)"
+    ]
   }
 }
