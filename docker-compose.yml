@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: database-sql-framework-mysql
+    container_name: qa-js-mysql-mysql
     environment:
       MYSQL_ROOT_PASSWORD: test_root_password
       MYSQL_DATABASE: UsersDB

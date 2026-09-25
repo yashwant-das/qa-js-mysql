@@ -1,0 +1,2 @@
+# Keep the exploration notebook out of GitHub language stats; the tests are JavaScript.
+*.ipynb linguist-documentation

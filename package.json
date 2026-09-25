@@ -1,11 +1,11 @@
 {
-  "name": "database-sql-framework",
+  "name": "qa-js-mysql",
   "version": "1.2.0",
   "description": "A comprehensive package for testing relational databases with both Node.js and Python implementations",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yashwant-das/database-sql-framework.git"
+    "url": "https://github.com/yashwant-das/qa-js-mysql.git"
   },
   "scripts": {
     "test": "jest",

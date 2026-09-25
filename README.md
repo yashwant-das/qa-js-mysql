@@ -1,96 +1,46 @@
-# Database SQL Framework
+# qa-js-mysql
 
-[![Tests](https://github.com/yashwant-das/database-sql-framework/actions/workflows/test.yml/badge.svg)](https://github.com/yashwant-das/database-sql-framework/actions/workflows/test.yml)
+[![Tests](https://github.com/yashwant-das/qa-js-mysql/actions/workflows/test.yml/badge.svg)](https://github.com/yashwant-das/qa-js-mysql/actions/workflows/test.yml)
 
-A comprehensive package for testing relational database operations using both **Node.js** and **Python**. This project demonstrates CRUD (Create, Read, Update, Delete) operations with MySQL databases using modern testing frameworks and **Docker** for consistent development environments.
+Tests MySQL queries with Jest against a database running in Docker: create, read, update and delete on a users table, using parameterized queries.
 
-## Features
-
-- **Dual Language Support**: Both JavaScript (Node.js) and Python implementations
-- **Comprehensive Testing**: Jest and unittest frameworks with proper setup/teardown
-- **Security First**: Parameterized queries to prevent SQL injection
-- **Interactive Learning**: Jupyter notebook for exploration
-- **Docker-First Setup**: Containerized MySQL database for consistent environments
-- **CI/CD Ready**: GitHub Actions workflow included
+`python/` has the same checks written with Python unittest, and a Jupyter notebook for exploring the data.
 
 ## Prerequisites
 
-- **Docker** (recommended for MySQL database)
-- Node.js (v14 or higher)
-- Python 3.7+
-- npm or yarn package manager
-- pip package manager
+- Docker
+- Node.js 18+
+- Python 3.9+ (only for `python/`)
 
-*Note: Docker provides the easiest and most consistent setup experience.*
-
-## Quick Start
-
-### Automated Setup (Recommended)
+## Run the Jest tests
 
 ```bash
-# Clone the repository
-git clone https://github.com/yashwant-das/database-sql-framework.git
-cd database-sql-framework
-
-# Run the automated setup and test script
-./scripts/setup-and-test.sh
-```
-
-This script will:
-
-- Check prerequisites (Docker, Node.js, Python)
-- Start MySQL database using Docker
-- Install all dependencies
-- Run comprehensive tests
-- Provide detailed results
-
-**Why Docker?** Docker ensures consistent MySQL setup across all environments, eliminating "works on my machine" issues.
-
-### Manual Setup
-
-#### 1. Start Database
-```bash
-# Start MySQL with Docker
-npm run db:start
-
-# Wait for MySQL to initialize (about 10 seconds)
-```
-
-#### 2. Setup Environment
-```bash
-# Copy environment file (no changes needed for Docker)
-cp .env.example .env
-```
-
-#### 3. Install Dependencies
-```bash
-# Node.js
+npm run db:start        # MySQL in Docker; allow about 10 seconds on first start
+cp .env.example .env    # works as-is with the Docker database
 npm install
-
-# Python
-cd python
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-#### 4. Run Tests
-```bash
-# Test database connection
-npm run test:connection
-
-# Run all tests
-npm test                     # Node.js tests
-cd python && python src/users.py     # Python tests
-
-# Stop database when done
+npm test
 npm run db:stop
 ```
+
+`npm run test:connection` checks the database connection on its own.
+
+## Run the Python tests
+
+```bash
+cd python
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+python src/users.py
+```
+
+## Run everything
+
+`./scripts/setup-and-test.sh` checks the prerequisites, starts MySQL, installs both sets of dependencies and runs both suites.
 
 ## Project Structure
 
 ```text
-database-sql-framework/
+qa-js-mysql/
 ├── .github/
 │   └── workflows/
 │       └── test.yml       # GitHub Actions CI/CD workflow
