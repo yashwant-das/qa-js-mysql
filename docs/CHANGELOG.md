@@ -1,9 +1,26 @@
 # Changelog
 
+<!-- markdownlint-configure-file {"MD024": {"siblings_only": true}} -->
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html) .
+
+## [Unreleased]
+
+### Changed
+
+- Corrected setup instructions, environment-loading and CI descriptions.
+- Documented destructive table setup and sequential execution against shared
+  databases.
+- Repaired the combined setup script's opening block and Python test path;
+  simplified its output.
+
+### Removed
+
+- Duplicate Jupyter CRUD demonstration and project-structure guide.
 
 ## [1.2.0] - 2025-07-21
 
@@ -22,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Streamlined environment configuration
 - **BREAKING**: Reorganized project structure following best practices:
   - Moved source files to `/src` directory
-  - Moved tests to `/tests` directory  
+  - Moved tests to `/tests` directory
   - Moved documentation to `/docs` directory
   - Moved scripts to `/scripts` directory
   - Reorganized Python files with `/src` and `/notebooks` subdirectories
@@ -66,7 +83,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Node.js: jest 29.7.0 → 30.0.4
   - Node.js: mysql2 3.9.2 → 3.14.2
   - Node.js: dotenv 16.0.3 → 17.2.0
-  - Node.js: faker 5.5.3 → @faker-js/faker 9.5.0 (modern package with `faker.person.fullName()`)
+  - Node.js: faker 5.5.3 → @faker-js/faker 9.5.0 (modern package with
+    `faker.person.fullName()` )
 - Improved SQL security with parameterized queries
 - Enhanced test coverage with UPDATE and DELETE operations
 - Better database connection management

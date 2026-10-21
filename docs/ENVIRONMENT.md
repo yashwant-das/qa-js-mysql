@@ -1,117 +1,123 @@
-# Environment Configuration Guide
+# Environment configuration
 
-This project uses a streamlined environment configuration setup optimized for Docker-first development.
+Use a disposable database. Both test suites drop and recreate the `users` table,
+so do not point them at a database containing data you need.
 
 ## Files Overview
 
 ### `.env` (Git-ignored)
-- Contains actual database connection values
-- Used by the application at runtime
-- Default values work with Docker setup
 
-### `.env.example` 
-- Template file committed to Git
-- Copy to `.env` to get started
-- Contains examples for external database providers
+- Stores local database connection values.
+- Copy `.env.example` to create it; the template matches the Docker setup.
 
-### `.env.development` (Optional)
-- Development-specific overrides
-- Useful for development-only settings
-- Committed to Git for team consistency
+### `.env.example` (tracked)
 
-## Quick Setup
+- Provides connection values for Docker and example settings for external
+  databases.
+- Keep it updated when configuration changes; do not put real credentials in it.
 
-### Option 1: Docker Setup (Recommended)
+### `.env.development` (tracked)
+
+- Is present in the repository but is not automatically loaded by either
+  implementation.
+- Do not rely on it for overrides or put private credentials in it.
+
+## Docker setup
+
+From the repository root:
+
 ```bash
-# 1. Copy template
 cp .env.example .env
-
-# 2. Start database
+npm install
 npm run db:start
-
-# 3. Run tests
-npm test
-```
-
-### Option 2: External Database
-```bash
-# 1. Copy template
-cp .env.example .env
-
-# 2. Edit .env with your database credentials
-nano .env
-
-# 3. Test connection
+# Wait for MySQL to accept connections before continuing.
 npm run test:connection
 ```
 
-## Environment Variables
+The template matches the credentials in `docker-compose.yml` . Editing `.env`
+changes the clients' configuration; it does not change the Docker server's
+credentials. MySQL stores its initialized database in the `mysql_data` volume,
+which survives `npm run db:stop` .
 
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `DB_HOST` | Database host | `localhost` | Yes |
-| `DB_USER` | Database username | `test_user` | Yes |
-| `DB_PASSWORD` | Database password | `test_password` | Yes |
-| `DB_PORT` | Database port | `3306` | Yes |
-| `DB_NAME` | Database name | `UsersDB` | Yes |
+## Variables
 
-## External Provider Examples
+Set all five values for consistent behavior across the JavaScript and Python
+tools:
 
-### AWS RDS
+| Variable      | Purpose                   | Docker template value |
+| ------------- | ------------------------- | --------------------- |
+| `DB_HOST`     | MySQL host                | `localhost`           |
+| `DB_USER`     | MySQL user                | `test_user`           |
+| `DB_PASSWORD` | MySQL password            | `test_password`       |
+| `DB_PORT`     | MySQL port                | `3306`                |
+| `DB_NAME`     | Existing database to test | `UsersDB`             |
+
+The JavaScript test configuration falls back to `localhost` , port `3306` ,
+database `UsersDB` , and empty user/password values. The Python configuration
+has no explicit defaults. The connection-check utility reads the variables
+directly.
+
+## Loading behavior
+
+JavaScript uses `dotenv.config()` to load `.env` from the current working
+directory. Run npm commands from the repository root.
+
+Python uses `load_dotenv()` to search for `.env` starting from the script's
+directory and continuing through parent directories. The root `.env` is found
+when running `python src/users.py` from `python/` .
+
+Existing process environment variables take precedence over values loaded from
+`.env` in both implementations. Neither implementation automatically loads
+`.env.development` or selects files based on `NODE_ENV` .
+
+The connection-check utility also requires a `.env` file in the current working
+directory, even if variables are already exported.
+
+## External MySQL database
+
+Replace the template values with your test database's connection details. Create
+the database first and grant the user permission to create and drop the `users`
+table and perform CRUD operations.
+
+From the repository root:
+
+```bash
+cp .env.example .env
+# Edit .env with your test database connection details.
+npm install
+npm run test:connection
+```
+
+For example, replace these placeholders with values from your database provider:
+
 ```env
-DB_HOST=your-rds-endpoint.region.rds.amazonaws.com
-DB_USER=your-username
-DB_PASSWORD=your-password
+DB_HOST=your-test-database-host
+DB_USER=your-test-user
+DB_PASSWORD=your-test-password
 DB_PORT=3306
-DB_NAME=your-database
+DB_NAME=your-test-database
 ```
 
-### PlanetScale
-```env
-DB_HOST=your-planetscale-host.psdb.cloud
-DB_USER=your-username
-DB_PASSWORD=your-password
-DB_PORT=3306
-DB_NAME=your-database
-```
-
-### Railway
-```env
-DB_HOST=containers-us-west-xyz.railway.app
-DB_USER=root
-DB_PASSWORD=your-password
-DB_PORT=your-port
-DB_NAME=railway
-```
+The current connection configurations do not expose TLS options. Providers
+requiring TLS need a code change as well as credentials.
 
 ## Best Practices
 
-1. **Never commit `.env`** - Contains sensitive credentials
-2. **Keep `.env.example` updated** - Template for team members
-3. **Use Docker for development** - Consistent environment
-4. **Test connection first** - Run `npm run test:connection`
-5. **Environment-specific files** - Use `.env.development` for dev overrides
+1. Keep real credentials out of tracked files.
+2. Keep `.env.example` synchronized with configuration changes.
+3. Use the Docker database for a consistent local setup.
+4. Check the connection before running the suites.
+5. Run suites sequentially against a shared disposable database.
 
 ## Troubleshooting
 
-### Connection Issues
-```bash
-# Check if Docker is running
-docker ps
+- Connection refused: check Docker is running, inspect `npm run db:logs` , and
+  wait for MySQL startup to finish.
+- Access denied: check credentials and grants. Existing Docker volumes keep
+  their initialized credentials.
+- Unknown database: create the configured database or correct `DB_NAME`.
+- Port already in use: stop the conflicting service or change the published port
+  in `docker-compose.yml` and match it with `DB_PORT` .
 
-# Start database if needed
-npm run db:start
-
-# Test connection
-npm run test:connection
-```
-
-### Environment Loading
-The application uses `dotenv` to load environment variables. Files are loaded in this order:
-1. `.env.development` (if NODE_ENV=development)
-2. `.env`
-
-### Security Notes
-- Environment files containing credentials are in `.gitignore`
-- Use strong passwords for production databases
-- Consider using environment-specific files for different deployments
+`.env` is ignored by Git. Keep real credentials out of committed files;
+`.env.example` and `.env.development` are tracked.
